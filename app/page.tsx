@@ -1,6 +1,12 @@
 "use client";
 import React from "react";
 import { Breadcrumb, Layout, Menu, theme } from "antd";
+import Introduce from "@/components/pageC/Introduce";
+import Projects from "@/components/pageC/Projects";
+import Skills from "@/components/pageC/Skills";
+import TimeLine from "@/components/pageC/TimeLine";
+import Contact from "@/components/pageC/Contact";
+
 
 const { Header, Content, Footer } = Layout;
 
@@ -40,7 +46,11 @@ const App: React.FC = () => {
             borderRadius: borderRadiusLG,
           }}
         >
-          Content
+          <Introduce />
+          <Projects />
+          <Skills />
+          <TimeLine />
+          <Contact />
         </div>
       </Content>
       <Footer style={{ textAlign: "center" }}>
