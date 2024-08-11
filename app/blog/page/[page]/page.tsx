@@ -1,11 +1,11 @@
-import React, { memo } from 'react'
-import type { FC, ReactNode } from 'react'
+import React, { memo } from "react";
+import type { FC, ReactNode } from "react";
 
 interface IProps {
-    children?: ReactNode
+  children?: ReactNode;
 }
 const BlogPages: FC<IProps> = memo(() => {
-    return <div>BlogPages</div>
-})
+  return <div>BlogPages</div>;
+});
 
-export default BlogPages
+export default BlogPages;
