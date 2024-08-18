@@ -1,21 +1,19 @@
 "use client";
-import React from "react";
-import Introduce from "@/components/pageC/Introduce";
-import Projects from "@/components/pageC/Projects";
-import Skills from "@/components/pageC/Skills";
-import TimeLine from "@/components/pageC/TimeLine";
-import Contact from "@/components/pageC/Contact";
 
-const App: React.FC = () => {
-  return (
-    <div style={{ background: "#f5f5f5" }}>
-      <Introduce />
-      <Projects />
-      <Skills />
-      <TimeLine />
-      <Contact />
-    </div>
-  );
-};
+import { useEffect, useState } from "react";
+import Main from "./Main";
 
-export default App;
+export default function Home() {
+  const [bloList, setBlogList] = useState<any>([]);
+  useEffect(() => {
+    const getBlogList = async () => {
+      const { data } = await fetch("http://localhost:3001/api/v1/article").then(
+        (res) => res.json()
+      );
+      console.log("🚀 ~ getBlogList ~ data:", data);
+      setBlogList(data);
+    };
+    getBlogList();
+  }, []);
+  return <Main posts={bloList} />;
+}
