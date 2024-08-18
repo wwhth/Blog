@@ -1,5 +1,8 @@
 import Link from "@/components/Link";
+import Tag from "@/components/Tag";
+import siteMetadata from "@/data/siteMetadata";
 
+import { formatDate } from "pliny/utils/formatDate";
 const MAX_DISPLAY = 5;
 
 export default function Home({ posts }: { posts: any }) {
@@ -12,7 +15,7 @@ export default function Home({ posts }: { posts: any }) {
             Latest
           </h1>
           <p className="text-lg leading-7 text-gray-500 dark:text-gray-400">
-            介绍
+            最近的博客
           </p>
         </div>
         <ul className="divide-y divide-gray-200 dark:divide-gray-700">
@@ -26,7 +29,9 @@ export default function Home({ posts }: { posts: any }) {
                     <dl>
                       <dt className="sr-only">Published on</dt>
                       <dd className="text-base font-medium leading-6 text-gray-500 dark:text-gray-400">
-                        <time dateTime={date}>时间</time>
+                        <time dateTime={date}>
+                          {formatDate(date, siteMetadata.locale)}
+                        </time>
                       </dd>
                     </dl>
                     <div className="space-y-5 xl:col-span-3">
@@ -44,7 +49,8 @@ export default function Home({ posts }: { posts: any }) {
                             {/* {tags.map((tag) => (
                               <Tag key={tag} text={tag} />
                             ))} */}
-                            标签
+                            {/* 标签 */}
+                            <Tag key={label} text={label} />
                           </div>
                         </div>
                         <div className="prose max-w-none text-gray-500 dark:text-gray-400">
@@ -57,7 +63,7 @@ export default function Home({ posts }: { posts: any }) {
                           className="text-primary-500 hover:text-primary-600 dark:hover:text-primary-400"
                           aria-label={`Read more: "${title}"`}
                         >
-                          Read more &rarr;
+                          详情 &rarr;
                         </Link>
                       </div>
                     </div>
@@ -75,7 +81,7 @@ export default function Home({ posts }: { posts: any }) {
             className="text-primary-500 hover:text-primary-600 dark:hover:text-primary-400"
             aria-label="All posts"
           >
-            All Posts &rarr;
+            所有 &rarr;
           </Link>
         </div>
       )}
