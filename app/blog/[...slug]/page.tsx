@@ -2,7 +2,6 @@
 
 import { useEffect, useState } from "react";
 import siteMetadata from "@/data/siteMetadata";
-
 import { formatDate } from "pliny/utils/formatDate";
 import Tag from "@/components/Tag";
 import Link from "next/link";
@@ -41,7 +40,10 @@ export default function BlogDetail({ params }: { params: { slug: string[] } }) {
                   Category
                 </h2>
                 <div className="flex flex-wrap">
-                  <Tag key={article.category} text={article.category} />
+                  {/* <Tag key={article.category} text={article.category} /> */}
+                  <div className="inline-flex items-center px-3 py-0.5 rounded-full text-sm font-medium bg-gray-100 text-gray-800 dark:bg-gray-900 dark:text-gray-300">
+                    {article.category}
+                  </div>
                 </div>
               </div>
             )}
@@ -51,7 +53,11 @@ export default function BlogDetail({ params }: { params: { slug: string[] } }) {
                   Tag
                 </h2>
                 <div className="flex flex-wrap">
-                  <Tag key={article.label} text={article.label} />
+                  <Tag
+                    key={article.label}
+                    text={article.label}
+                    url={article.label_id}
+                  />
                 </div>
               </div>
             )}

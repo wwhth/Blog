@@ -21,7 +21,7 @@ export default function Home({ posts }: { posts: any }) {
         <ul className="divide-y divide-gray-200 dark:divide-gray-700">
           {!posts.length && "No posts found."}
           {posts.slice(0, MAX_DISPLAY).map((post: any) => {
-            const { id, date, title, introduce, label } = post;
+            const { id, date, title, introduce, label, label_id } = post;
             return (
               <li key={id} className="py-12">
                 <article>
@@ -50,7 +50,7 @@ export default function Home({ posts }: { posts: any }) {
                               <Tag key={tag} text={tag} />
                             ))} */}
                             {/* 标签 */}
-                            <Tag key={label} text={label} />
+                            <Tag key={label} text={label} url={label_id} />
                           </div>
                         </div>
                         <div className="prose max-w-none text-gray-500 dark:text-gray-400">
