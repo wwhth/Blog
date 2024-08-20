@@ -1,16 +1,9 @@
-import Link from "next/link";
-import React, { memo } from "react";
-import type { FC, ReactNode } from "react";
+import Link from "../Link";
 
-interface IProps {
-  children?: ReactNode;
-}
-const Contact: FC<IProps> = memo(() => {
+export default function Contact() {
   return (
     <div>
-      <Link href="/blog">博客</Link>
+      <Link href={"/blog"}>博客</Link>
     </div>
   );
-});
-
-export default Contact;
+}

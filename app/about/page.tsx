@@ -8,7 +8,7 @@ import Contact from "@/components/pageC/Contact";
 
 export default function About() {
   return (
-    <div style={{ background: "#f5f5f5" }}>
+    <div>
       <Introduce />
       <Projects />
       <Skills />
