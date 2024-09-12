@@ -11,7 +11,7 @@ export default function BlogDetail({ params }: { params: { slug: string[] } }) {
   useEffect(() => {
     async function fetchData() {
       const { data } = await fetch(
-        `http://localhost:3001/api/v1/article/${id}`
+        `http://101.200.232.30:3001/api/v1/article/${id}`
       ).then((res) => res.json());
       console.log("data: ", data);
       setArticle(data[0]);

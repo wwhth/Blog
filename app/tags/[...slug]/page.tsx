@@ -8,7 +8,7 @@ export default function tagPost({ params }: { params: { slug: number[] } }) {
   useEffect(() => {
     async function getPostsByTagId() {
       const { data } = await fetch(
-        `http://localhost:3001/api/v1/article/label/${id}`
+        `http://101.200.232.30:3001/api/v1/article/label/${id}`
       ).then((res) => res.json());
       setFilteredPosts(data);
     }

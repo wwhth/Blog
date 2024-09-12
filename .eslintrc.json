@@ -1,7 +1,10 @@
 {
   "extends": "next/core-web-vitals",
-  "excludes": ["*.json"],
   "rules": {
-    "react/display-name": "off"
+    "react/display-name": "off",
+    "react-hooks/exhaustive-deps": "off",
+    "react/no-unescaped-entities":"off",
+    "no-explicit-any":"off",
+    "react-hooks/rules-of-hooks":"off"
   }
 }

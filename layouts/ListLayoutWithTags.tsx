@@ -79,14 +79,14 @@ export default function ListLayoutWithTags({
   const [blogList, setBlogList] = useState<any>([]);
   useEffect(() => {
     const getBlogList = async () => {
-      const { data } = await fetch("http://localhost:3001/api/v1/article").then(
+      const { data } = await fetch("http://101.200.232.30:3001/api/v1/article").then(
         (res) => res.json()
       );
       console.log("🚀 ~ getBlogList ~ data:", data);
       setBlogList(data);
     };
     const getTagsList = async () => {
-      const { data } = await fetch("http://localhost:3001/api/v1/label").then(
+      const { data } = await fetch("http://101.200.232.30:3001/api/v1/label").then(
         (res) => res.json()
       );
       setTagsList(data);
