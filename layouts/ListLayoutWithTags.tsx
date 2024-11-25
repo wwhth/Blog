@@ -184,7 +184,7 @@ export default function ListLayoutWithTags({
                 })
               ) : (
                 <div className="text-center text-gray-500 dark:text-gray-400">
-                  No posts found
+                  暂无数据
                 </div>
               )}
             </ul>

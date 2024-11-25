@@ -10,8 +10,9 @@ export default function Home() {
       const { data } = await fetch("http://101.200.232.30:3001/api/v1/article").then(
         (res) => res.json()
       );
-      console.log("🚀 ~ getBlogList ~ data:", data);
-      setBlogList(data);
+
+      let reData = data.reverse()
+      setBlogList(reData);
     };
     getBlogList();
   }, []);
