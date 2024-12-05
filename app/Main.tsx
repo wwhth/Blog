@@ -81,7 +81,7 @@ export default function Home({ posts }: { posts: any }) {
             className="text-primary-500 hover:text-primary-600 dark:hover:text-primary-400"
             aria-label="All posts"
           >
-            所有 &rarr;
+            所有 &crarr;
           </Link>
         </div>
       )}

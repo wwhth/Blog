@@ -4,14 +4,19 @@ import { useEffect, useState } from "react";
 import siteMetadata from "@/data/siteMetadata";
 import { formatDate } from "pliny/utils/formatDate";
 import Tag from "@/components/Tag";
+import mdEditor from "@/components/mdEditor/index";
 import Link from "next/link";
+import { MdPreview, MdCatalog } from 'md-editor-rt';
+import 'md-editor-rt/lib/preview.css';
 export default function BlogDetail({ params }: { params: { slug: string[] } }) {
   const [article, setArticle] = useState<any>({});
   const id = decodeURI(params.slug.join("/"));
+  const [scrollElement] = useState(document.documentElement);
   useEffect(() => {
     async function fetchData() {
       const { data } = await fetch(
-        `http://101.200.232.30:3001/api/v1/article/${id}`
+        `http://localhost:3001/api/v1/article/${id}`
+        // `http://101.200.232.30:3001/api/v1/article/${id}`
       ).then((res) => res.json());
       console.log("data: ", data);
       setArticle(data[0]);
@@ -72,10 +77,18 @@ export default function BlogDetail({ params }: { params: { slug: string[] } }) {
             </div>
           </div>
         </div>
-        <div
+       
+        {article.artical_type == 1 ? (<div
           className="w-2/3"
           dangerouslySetInnerHTML={{ __html: article.content }}
-        ></div>
+        ></div>) : (<div
+          className="w-2/3"
+          >
+            {/* <md-editor text={article.content} /> */}
+            <MdPreview id={article.id} modelValue={article.content} />
+            <MdCatalog editorId={article.id} scrollElement={scrollElement} />
+        </div>)
+        }
       </div>
     </>
   );
