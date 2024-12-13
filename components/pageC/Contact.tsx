@@ -1,10 +1,11 @@
 import Link from "../Link";
 
-export default function Contact({testZ}:{testZ:any}) {
+// {testZ}:{testZ:any}
+export default function Contact() {
   return (
     <div>
       <Link href={"/blog"}>博客</Link>
-      {testZ}
+      {/* {testZ} */}
     </div>
   );
 }
