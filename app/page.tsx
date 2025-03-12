@@ -11,7 +11,7 @@ export default function Home() {
         (res) => res.json()
       );
 
-      let reData = data.reverse()
+      let reData = data
       setBlogList(reData);
     };
     getBlogList();
