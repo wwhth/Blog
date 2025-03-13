@@ -1,20 +1,75 @@
-# 基础镜像为node，版本为最新
-FROM node:20.11.0
-# 创建容器内的项目存放目录
-RUN mkdir -p /home/Blog
-WORKDIR /home/Blog
 
-#  将Dockerfile当前目录下所有文件拷贝至容器内项目目录并安装项目依赖
-COPY . /home/Blog
+# syntax=docker.io/docker/dockerfile:1
 
-# RUN npm config set proxy http://101.200.232.30:3001
-# RUN npm config set https-proxy http://101.200.232.30:3001
-RUN npm config set registry https://registry.npmmirror.com
-RUN npm install pnpm -g
-RUN pnpm install
+FROM node:20.11.0-alpine AS base
+
 RUN npm install pm2 -g
-# 容器对外暴露的端口号，要和node项目配置的端口号一致
+# RUN apk add --no-cache \
+#     ca-certificates \
+#     && update-ca-certificates
+# ENV NODE_TLS_REJECT_UNAUTHORIZED=0
+# Install dependencies only when needed
+FROM base AS deps
+# Check https://github.com/nodejs/docker-node/tree/b4117f9333da4138b03a546ec926ef50a31506c3#nodealpine to understand why libc6-compat might be needed.
+RUN apk add --no-cache libc6-compat
+WORKDIR /app
+
+# 谷歌字体鉴权失败，只能搞在本地
+COPY package.json yarn.lock* package-lock.json* pnpm-lock.yaml* .npmrc* ./
+COPY public/fonts ./public/fonts  
+COPY app/layout.tsx ./app/      
+COPY ecosystem.config.json .
+# RUN \
+#   if [ -f yarn.lock ]; then yarn --frozen-lockfile; \
+#   elif [ -f package-lock.json ]; then npm ci; \
+#   elif [ -f pnpm-lock.yaml ]; then corepack enable pnpm && pnpm i --frozen-lockfile; \
+#   else echo "Lockfile not found." && exit 1; \
+#   fi
+RUN npm install
+# Rebuild the source code only when needed
+FROM base AS builder
+WORKDIR /app
+COPY --from=deps /app/node_modules ./node_modules
+COPY . .
+COPY ecosystem.config.json . 
+
+# Next.js collects completely anonymous telemetry data about general usage.
+# Learn more here: https://nextjs.org/telemetry
+# Uncomment the following line in case you want to disable telemetry during the build.
+# ENV NEXT_TELEMETRY_DISABLED=1
+# RUN \
+#   if [ -f yarn.lock ]; then yarn run build; \
+#   elif [ -f package-lock.json ]; then npm run build; \
+#   elif [ -f pnpm-lock.yaml ]; then corepack enable pnpm && pnpm run build; \
+#   else echo "Lockfile not found." && exit 1; \
+#   fi
+RUN npm run build
+# Production image, copy all the files and run next
+FROM base AS runner
+WORKDIR /app
+
+ENV NODE_ENV=production
+# Uncomment the following line in case you want to disable telemetry during runtime.
+# ENV NEXT_TELEMETRY_DISABLED=1
+
+RUN addgroup --system --gid 1001 nodejs
+RUN adduser --system --uid 1001 nextjs
+
+COPY --from=builder /app/public ./public
+
+# Automatically leverage output traces to reduce image size
+# https://nextjs.org/docs/advanced-features/output-file-tracing
+COPY --from=builder --chown=nextjs:nodejs /app/.next/standalone ./
+COPY --from=builder --chown=nextjs:nodejs /app/.next/static ./.next/static
+# USER nextjs
+COPY ecosystem.config.json .
+
+
 EXPOSE 3000
 
-# 容器启动时执行的命令
-CMD [ "npm","run", "started" ]
+ENV PORT=3000
+
+# server.js is created by next build from the standalone output
+# https://nextjs.org/docs/pages/api-reference/config/next-config-js/output
+ENV HOSTNAME="0.0.0.0"
+CMD ["npm", "run", "started"]

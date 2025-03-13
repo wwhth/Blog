@@ -2,6 +2,7 @@ import "css/tailwind.css";
 import "pliny/search/algolia.css";
 import "remark-github-blockquote-alert/alert.css";
 
+import localFont from 'next/font/local'
 import { Space_Grotesk } from "next/font/google";
 import { Analytics, AnalyticsConfig } from "pliny/analytics";
 import { SearchProvider, SearchConfig } from "pliny/search";
@@ -12,12 +13,27 @@ import siteMetadata from "@/data/siteMetadata";
 import { ThemeProviders } from "./theme-providers";
 import { Metadata } from "next";
 
-const space_grotesk = Space_Grotesk({
-  subsets: ["latin"],
-  display: "swap",
-  variable: "--font-space-grotesk",
-});
-
+// const space_grotesk = Space_Grotesk({
+//   subsets: ["latin"],
+//   display: "swap",
+//   variable: "--font-space-grotesk",
+// });
+const space_grotesk = localFont({
+  src: [
+    {
+      path: '../public/fonts/SpaceGrotesk-VariableFont_wght.ttf',
+      weight: '300 700',
+      style: 'normal',
+    },
+    // {
+    //   path: '../public/fonts/SpaceGrotesk-Variable-Italic.woff2',
+    //   weight: '300 700',
+    //   style: 'italic',
+    // }
+  ],
+  display: 'swap',
+  variable: '--font-space-grotesk',
+})
 export const metadata: Metadata = {
   metadataBase: new URL(siteMetadata.siteUrl),
   title: {

@@ -1,20 +1,22 @@
 {
-  "apps": [
-    {
-      "name": "Blog",
-      "script": "pnpm run build && pnpm run start",
-      "env": {
-        "NODE_ENV": "production" 
-      },
-      "instances": "max",
-      "error_file": "./logs/err.log",
-      "out_file": "./logs/out.log",
-      "log_date_format": "YYYY-MM-DD HH:mm Z",
-      "min_uptime": "120s",
-      "max_restarts": 8,
-      "autorestart": false,
-      "watch": false,
-      "max_memory_restart": "1G"
-    }
-  ]
+  "apps": [{
+    "name": "Blog",
+    "script": "./server.js",
+    "args": "",
+    "interpreter": "node",
+    "env": {
+      "NODE_ENV": "production",
+      "NEXT_TELEMETRY_DISABLED": "1"
+    },
+    "instances": 2,      
+    "exec_mode": "fork",
+    "error_file": "/app/logs/err.log",  
+    "out_file": "/app/logs/out.log",
+    "log_date_format": "YYYY-MM-DD HH:mm Z",
+    "min_uptime": "120s",
+    "max_restarts": 8,
+    "autorestart": true,  
+    "watch": false,
+    "max_memory_restart": "800M" 
+  }]
 }
